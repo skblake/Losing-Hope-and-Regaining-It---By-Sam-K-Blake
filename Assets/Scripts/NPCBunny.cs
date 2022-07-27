@@ -20,7 +20,7 @@ public class NPCBunny : Bunny
         if (DistToPartner < sightRadius) {
             Debug.Log("MOVE");
 
-        move = (transform.position - myPartner.myGraphic.position);
+        move = (myPartner.myGraphic.position - transform.position);
 
         // moves player in correct horizontal direction at the correct speed
         Debug.Log(controller.Move(move * speed * Time.deltaTime));

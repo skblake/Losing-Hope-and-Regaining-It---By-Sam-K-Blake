@@ -42,7 +42,7 @@ public class Bunny : MonoBehaviour
         }
     
     public float DistToPartner {
-        get { return Vector3.Distance(transform.position, myPartner.transform.position); }
+        get { return Vector3.Magnitude(myPartner.transform.position - transform.position); }
     }
     
     public float timeSinceReply = 0f;
