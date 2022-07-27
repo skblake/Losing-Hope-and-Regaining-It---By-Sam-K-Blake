@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <created>2017-05-14T14:29:48Z</created>
+    <modified>2017-05-14T14:29:48Z</modified>
+  </asset>
+  <library_images>
+    <image id="Image">
+      <init_from>Textures/piki_leaf_tex.png</init_from>
+    </image>
+  </library_images>
+  <library_materials>
+    <material id="VisualMaterial" name="body_m">
+      <instance_effect url="#Effect"/>
+      <extra>
+        <technique profile="FCOLLADA">
+          <user_properties>body_m</user_properties>
+        </technique>
+      </extra>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="Effect" name="piki_leaf_tex_png">
+      <profile_COMMON>
+        <newparam sid="Image-surface">
+          <surface type="2D">
+            <init_from>Image</init_from>
+            <format>A8R8G8B8</format>
+          </surface>
+        </newparam>
+        <newparam sid="Image-sampler">
+          <sampler2D>
+            <source>Image-surface</source>
+            <wrap_s>WRAP</wrap_s>
+            <wrap_t>WRAP</wrap_t>
+            <minfilter>NONE</minfilter>
+            <magfilter>NONE</magfilter>
+            <mipfilter>NONE</mipfilter>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color>0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color>0 0 0 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="Image-sampler" texcoord=""/>
+            </diffuse>
+            <specular>
+              <color>1 1 1 1</color>
+            </specular>
+            <shininess>
+              <float>0</float>
+            </shininess>
+            <transparent opaque="A_ONE">
+              <color>0 0 0 1</color>
+            </transparent>
+            <transparency>
+              <float>1</float>
+            </transparency>
+            <index_of_refraction>
+              <float>1.55</float>
+            </index_of_refraction>
+          </phong>
+          <extra>
+            <technique profile="FCOLLADA">
+              <spec_level>
+                <float>0</float>
+              </spec_level>
+            </technique>
+          </extra>
+        </technique>
+      </profile_COMMON>
+      <extra>
+        <technique profile="FCOLLADA">
+          <user_properties>piki_leaf_tex.png</user_properties>
+        </technique>
+      </extra>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="Geometry" name="leaf__body_m">
+      <mesh>
+        <source id="GeometrySource" name="leaf__body_mPos">
+          <float_array id="GeometrySource-array" count="189">-1.62025 0.266783 -1.64375 -0.810127 0.287806 -1.6693 -2.5313 0.457201 -3.41697 0 0.051542 -0.038044 0 0.001463 -1.69485 -1.25387 0.390126 -3.45312 -1.34015 0.33931 -5.75593 -2.70461 0.440704 -5.74398 0.829927 0.28005 -1.668 1.65985 0.251271 -1.64115 0.023564 -0.020346 -3.48927 1.29761 0.378694 -3.45129 0.024302 -0.138218 -5.76788 -1.04373 0.055099 -7.80283 -2.11251 0.11414 -7.79009 2.57166 0.434339 -3.41332 1.38534 0.326354 -5.75375 0.02504 -0.347337 -7.81557 1.09086 0.044126 -7.80087 -1.5022 -0.203567 -8.9464 -0.738695 -0.266242 -8.95424 0.024806 -0.531978 -8.96208 2.74637 0.414793 -5.73963 2.15669 0.092192 -7.78617 1.54808 -0.219546 -8.9435 0.786441 -0.274232 -8.95279 -0.680269 -0.581251 -10.0251 0.024572 -0.732608 -9.98662 0.727462 -0.588142 -10.024 0.024305 -1.06453 -11.0326 0.024305 -1.06453 -11.0326 0.02459 -0.438707 -7.81222 1.09041 -0.047245 -7.79752 0.023852 -0.229589 -5.76453 0.024357 -0.62264 -8.95553 -1.04418 -0.03627 -7.79948 1.38489 0.234983 -5.7504 2.15624 0.00082 -7.78282 1.54763 -0.310917 -8.94016 0.785991 -0.365248 -8.94784 0.024123 -0.822561 -9.97686 -0.739145 -0.357258 -8.94929 -1.3406 0.247938 -5.75258 -2.11296 0.022769 -7.78675 -1.50265 -0.294938 -8.94306 2.74592 0.323422 -5.73628 2.57121 0.342967 -3.40999 1.29716 0.287323 -3.44795 0.727012 -0.679513 -10.0206 0.023855 -1.15591 -11.0292 -0.68072 -0.672622 -10.0218 -2.70506 0.349332 -5.74063 0.829702 0.188426 -1.65879 1.6594 0.1599 -1.6378 0 -0.090413 -1.67978 0.023114 -0.111718 -3.48592 -1.25432 0.298754 -3.44977 -2.53175 0.365829 -3.41362 0 -0.046658 -0.034696 -0.810352 0.196181 -1.66009 -1.6207 0.175411 -1.6404 0.024123 -0.822561 -9.97686 0.023855 -1.15591 -11.0292</float_array>
+          <technique_common>
+            <accessor source="#GeometrySource-array" count="63" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="GeometrySource1" name="leaf__body_mNrm">
+          <float_array id="GeometrySource1-array" count="189">0.142968 0.989028 0.03721 0.16644 0.984931 0.046994 0.129073 0.991512 0.015645 0.150594 0.987659 0.043026 0.005868 0.999659 -0.025431 0.182159 0.983269 0 0.19751 0.97777 -0.070399 0.168276 0.984216 -0.054787 -0.154698 0.986935 0.045038 -0.133098 0.990405 0.037189 0.146902 0.989143 -0.003917 -0.174232 0.984703 -0.001957 0.003912 0.997646 -0.068465 0.174193 0.968828 -0.176151 0.195764 0.976861 -0.086136 -0.121369 0.992484 0.01566 -0.189949 0.979117 -0.072454 0.228975 0.964825 -0.129165 -0.166271 0.970237 -0.176051 0.215357 0.967147 -0.135087 0.207436 0.951076 -0.228963 0.003911 0.983674 -0.179917 -0.15844 0.985848 -0.054769 -0.185935 0.978607 -0.088074 -0.205547 0.969006 -0.137031 -0.197675 0.953147 -0.22899 0.287614 0.939148 -0.18783 0.003913 0.966584 -0.256321 -0.279894 0.941463 -0.187901 0.338821 0.918538 -0.203684 -0.330663 0.921551 -0.203485 0.221118 -0.966658 0.129149 0.166271 -0.970237 0.176051 -0.003912 -0.997646 0.068465 -0.003911 -0.983674 0.179917 -0.174193 -0.968828 0.176151 0.189949 -0.979117 0.072454 0.185935 -0.978607 0.088074 0.205547 -0.969006 0.137031 0.197675 -0.953147 0.22899 0.039125 -0.968355 0.24649 -0.207436 -0.951076 0.228963 -0.19751 -0.97777 0.070399 -0.195764 -0.976861 0.086136 -0.215357 -0.967147 0.135087 0.15844 -0.985848 0.054769 0.121369 -0.992484 -0.01566 0.174232 -0.984703 0.001957 0.279894 -0.941463 0.187901 0.330663 -0.921551 0.203485 -0.287614 -0.939148 0.18783 -0.168276 -0.984216 0.054787 0.154684 -0.986846 -0.046992 0.133098 -0.990405 -0.037189 -0.005869 -0.999707 0.023476 0.138954 -0.990291 0.003914 -0.182159 -0.983269 0 -0.129073 -0.991512 -0.015645 0.141016 -0.989069 -0.043088 -0.166424 -0.984839 -0.048948 -0.142968 -0.989028 -0.03721 -0.216982 -0.930479 0.295173 -0.338821 -0.918538 0.203684</float_array>
+          <technique_common>
+            <accessor source="#GeometrySource1-array" count="63" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="GeometrySource2" name="leaf__body_mUV">
+          <float_array id="GeometrySource2-array" count="126">0.207019 0.157809 0.351659 0.157717 0.044358 0.315755 0.496315 0.013626 0.496315 0.157641 0.272435 0.315541 0.257038 0.519326 0.013412 0.519356 0.644495 0.157732 0.792676 0.157824 0.500526 0.315328 0.727993 0.315557 0.500648 0.51928 0.299809 0.679438 0.098802 0.679515 0.955474 0.31577 0.743664 0.519326 0.500816 0.679362 0.701259 0.679454 0.206226 0.785595 0.353491 0.785489 0.500771 0.785367 0.986664 0.519371 0.901717 0.679545 0.794598 0.785626 0.647684 0.785504 0.418357 0.885908 0.500664 0.885863 0.582757 0.885908 0.500618 0.984482 0.500618 0.984482 0.500725 0.679393 0.701183 0.679469 0.500572 0.519295 0.500679 0.785458 0.299733 0.679469 0.743572 0.519341 0.901625 0.679561 0.794507 0.785687 0.647593 0.785565 0.500618 0.885847 0.353414 0.78555 0.256947 0.519326 0.098725 0.679545 0.206134 0.785641 0.986587 0.519387 0.955398 0.315801 0.727916 0.315572 0.582696 0.885908 0.500557 0.984161 0.418311 0.885908 0.013336 0.519371 0.64445 0.157763 0.792599 0.157839 0.496315 0.157687 0.500435 0.315343 0.272358 0.315557 0.044281 0.31577 0.496315 0.013336 0.351629 0.157763 0.206943 0.157824 0.500618 0.885847 0.500557 0.984161</float_array>
+          <technique_common>
+            <accessor source="#GeometrySource2-array" count="63" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="GeometrySource3" name="leaf__body_mClr">
+          <float_array id="GeometrySource3-array" count="252">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</float_array>
+          <technique_common>
+            <accessor source="#GeometrySource3-array" count="63" stride="4">
+              <param name="R" type="float"/>
+              <param name="G" type="float"/>
+              <param name="B" type="float"/>
+              <param name="A" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Geometry-vertices">
+          <input semantic="POSITION" source="#GeometrySource"/>
+          <input semantic="NORMAL" source="#GeometrySource1"/>
+          <input semantic="TEXCOORD" source="#GeometrySource2"/>
+          <input semantic="COLOR" source="#GeometrySource3"/>
+        </vertices>
+        <triangles material="VisualMaterial0" count="88">
+          <input semantic="VERTEX" source="#Geometry-vertices" offset="0"/>
+          <p>0 1 2 0 3 1 1 3 4 1 5 2 1 4 5 2 5 6 2 6 7 3 8 4 3 9 8 4 10 5 4 8 11 4 11 10 5 10 12 10 11 12 5 12 6 6 13 7 6 12 13 7 13 14 8 15 11 9 15 8 11 16 12 11 15 16 12 17 13 12 18 17 12 16 18 13 19 14 13 20 19 13 21 20 13 17 21 17 18 21 15 22 16 16 23 18 16 22 23 18 23 24 18 24 25 18 25 21 20 26 19 20 21 27 20 27 26 21 25 27 25 28 27 24 28 25 26 27 29 27 28 30 31 32 33 31 34 32 31 35 34 31 33 35 32 36 33 32 37 36 32 38 37 32 39 38 32 34 39 34 40 39 34 41 40 34 35 41 35 33 42 35 42 43 35 44 41 35 43 44 37 45 36 36 45 46 36 47 33 36 46 47 39 40 48 38 39 48 40 49 48 41 44 50 40 41 50 43 42 51 46 52 47 46 53 52 47 52 54 47 55 33 47 54 55 33 56 42 54 56 55 33 55 56 56 57 42 51 42 57 52 58 54 52 53 58 56 59 57 54 58 59 54 59 56 58 60 59 57 59 60 61 50 62</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers>
+    <controller id="Controller">
+      <skin source="#Geometry">
+        <bind_shape_matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</bind_shape_matrix>
+        <source id="Controller-joints">
+          <Name_array id="Controller-joints-array" count="1">leaf</Name_array>
+          <technique_common>
+            <accessor source="#Controller-joints-array" count="1" stride="1">
+              <param name="JOINT" type="Name"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Controller-bind_poses">
+          <float_array id="Controller-bind_poses-array" count="16">1 0 0 -0.020655 0 0 -1 0 0 1 0 0 0 0 0 1</float_array>
+          <technique_common>
+            <accessor source="#Controller-bind_poses-array" count="1" stride="16">
+              <param name="TRANSFORM" type="float4x4"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Controller-weights">
+          <float_array id="Controller-weights-array" count="1">1</float_array>
+          <technique_common>
+            <accessor source="#Controller-weights-array" count="1" stride="1">
+              <param name="WEIGHT" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <joints>
+          <input semantic="JOINT" source="#Controller-joints"/>
+          <input semantic="INV_BIND_MATRIX" source="#Controller-bind_poses"/>
+        </joints>
+        <vertex_weights count="63">
+          <input semantic="JOINT" source="#Controller-joints" offset="0"/>
+          <input semantic="WEIGHT" source="#Controller-weights" offset="1"/>
+          <vcount>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </vcount>
+          <v>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</v>
+        </vertex_weights>
+      </skin>
+      <extra>
+        <technique profile="FCOLLADA">
+          <user_properties>SkinController</user_properties>
+        </technique>
+      </extra>
+    </controller>
+  </library_controllers>
+  <library_visual_scenes>
+    <visual_scene id="VisualSceneNode" name="rdmscene">
+      <node id="VisualSceneNode1" name="leaf" sid="leaf" type="JOINT">
+        <matrix>1 0 0 0.020655 0 0 1 0 0 -1 0 0 0 0 0 1</matrix>
+      </node>
+      <node id="VisualSceneNode2" name="leaf__body_m" type="NODE">
+        <matrix>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+        <instance_controller url="#Controller">
+          <skeleton>#VisualSceneNode1</skeleton>
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="VisualMaterial0" target="#VisualMaterial"/>
+            </technique_common>
+          </bind_material>
+        </instance_controller>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#VisualSceneNode"/>
+  </scene>
+</COLLADA>
