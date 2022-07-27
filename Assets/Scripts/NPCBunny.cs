@@ -5,29 +5,26 @@ using UnityEngine;
 public class NPCBunny : Bunny
 {
     public float speed = 10f;
+    public bool movesToPartner = true;
+
+    // For adding target destinations 
+    public List<Transform> targets = new List<Transform>();
 
     private Vector3 move;
-
-    new void Start() 
-    { 
-        //automated = true;
-
-        base.Start(); 
-    }
 
     new void Update()
     {
         if (DistToPartner < sightRadius) {
-            Debug.Log("MOVE");
+            myPartner.LogReply(); // Sight will not fade if partner is in range
 
-        move = (myPartner.myGraphic.position - transform.position);
+            if (movesToPartner) {
+                // Calculate vector from NPC position to player position
+                move = (myPartner.myGraphic.position - transform.position);
 
-        // moves player in correct horizontal direction at the correct speed
-        Debug.Log(controller.Move(move * speed * Time.deltaTime));
-
-            // controller.Move(myPartner.transform.position * speed * Time.deltaTime);
-        }
-
+                // moves player in correct horizontal direction at the correct speed
+                controller.Move(move * speed * Time.deltaTime);
+            }
+        }   
         if (elapsedTime > songTimer) Sing();
 
         base.Update();
@@ -70,5 +67,4 @@ public class NPCBunny : Bunny
     {
         yield return null;
     }
-
 }

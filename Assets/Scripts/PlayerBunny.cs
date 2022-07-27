@@ -23,6 +23,7 @@ public class PlayerBunny : Bunny
     private float x = 0f; 
     private float z = 0f;
     private Vector3 move;
+    public bool isMoving;
 
     ////// COLOR VARIABLES ////// 
     public float colorLerpSecs = 3f;
@@ -49,6 +50,12 @@ public class PlayerBunny : Bunny
         z = Input.GetAxis("Vertical");
 
         move = transform.right * x + transform.forward * z;
+
+        if (move.magnitude > 0) {
+            isMoving = true;
+        } else {
+            isMoving = false;
+        }
 
         // moves player in correct horizontal direction at the correct speed
         controller.Move(move * speed * Time.deltaTime);
