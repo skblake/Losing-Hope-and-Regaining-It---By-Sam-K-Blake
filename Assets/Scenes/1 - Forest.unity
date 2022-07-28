@@ -3232,7 +3232,7 @@ PrefabInstance:
     - target: {fileID: 1530223144218242944, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: manager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1421031582}
     - target: {fileID: 1530223144218242944, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: replyOffset
       value: 2
@@ -6116,7 +6116,7 @@ PrefabInstance:
     - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: manager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1421031582}
     - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: automated
       value: 1
@@ -10914,7 +10914,7 @@ GameObject:
   m_Component:
   - component: {fileID: 875600256}
   - component: {fileID: 875600258}
-  - component: {fileID: 875600257}
+  - component: {fileID: 875600259}
   m_Layer: 0
   m_Name: InitTrigger
   m_TagString: Untagged
@@ -10937,19 +10937,6 @@ Transform:
   m_Father: {fileID: 1729218693}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &875600257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 875600255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76ae04e9dddb04644a47876434b9128a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isHit: 0
 --- !u!65 &875600258
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10963,6 +10950,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 50, y: 20, z: 5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &875600259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875600255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f1994e669aa42e0b39d6f149f2f0c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHit: 0
 --- !u!1001 &887211893
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16946,7 +16946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npc: {fileID: 454683327}
-  trigger: {fileID: 875600257}
+  trigger: {fileID: 875600259}
   triggerTargets:
   - {fileID: 749753873}
   - {fileID: 1887652797}

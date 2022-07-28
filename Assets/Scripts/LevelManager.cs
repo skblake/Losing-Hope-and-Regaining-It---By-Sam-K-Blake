@@ -6,7 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public NPCBunny npc;
     // public PlayerBunny player;
-    public AddTargetTrigger trigger;
+    public PlayerTrigger trigger;
     public List<Transform> triggerTargets;
 
     void Update()

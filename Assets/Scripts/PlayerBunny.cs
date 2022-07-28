@@ -81,7 +81,7 @@ public class PlayerBunny : Bunny
         /////////// UPDATE SIGHT OVERLAY ///////////
         timeSinceReply += Time.deltaTime;
 
-        if (DistToPartner > sightRadius) { // sight will not fade within range
+        if (DistToPartner > sightRadius) { // player is outside range
             targetColor.a = timeSinceReply / blackoutSecs;
         } else {
             targetColor.a = 0f;
@@ -90,7 +90,6 @@ public class PlayerBunny : Bunny
         sightOverlay.color = Color.Lerp(sightOverlay.color, targetColor, colorLerpSecs);
 
         // targetColor.a = DistToPartner / blackoutDist + (timeSinceReply / blackoutSecs);
-
 
         base.Update();
     }

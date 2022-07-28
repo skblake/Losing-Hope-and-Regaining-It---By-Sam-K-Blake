@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
-public class AddTargetTrigger : MonoBehaviour
+public class PlayerTrigger : MonoBehaviour
 {
     public bool isHit = false;
 

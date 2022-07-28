@@ -115,10 +115,7 @@ public class NPCBunny : Bunny
             default:
                 Debug.Log("ERROR: Unrecognized state " + myState);
             break;
-
         }
-
-
 
         base.Update();
     }
@@ -169,6 +166,8 @@ public class NPCBunny : Bunny
             _targets.Add(t.position);
             Debug.Log("FOUND " + _targets.Count + " TARGETS");
         }
+
+        if (_targets.Count > 0) myState = NPCBunnyState.SeekingNext;
     }
 
     void Face(Vector3 pos, bool leansToward)
