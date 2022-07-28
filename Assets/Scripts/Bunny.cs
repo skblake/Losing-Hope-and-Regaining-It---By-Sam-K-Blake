@@ -23,8 +23,9 @@ public class Bunny : MonoBehaviour
 
     // faces
     public SkinnedMeshRenderer myRenderer; // renderer should have two materials
-    public Material singFace;              // (first is body and second is face)
+    public Material singFace;              // (1 - body and 2 - face)
     public Material neutralFace; 
+    public Material happyFace;
 
     ////// INSTANTIATED AT RUNTIME ////// 
     public Bunny myPartner;

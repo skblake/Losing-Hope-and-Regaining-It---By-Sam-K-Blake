@@ -255,7 +255,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &508438605
 Transform:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508438604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -232, y: -1054.3109, z: -1138}
+  m_LocalPosition: {x: -43, y: 0.5, z: -46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -290,6 +290,14 @@ PrefabInstance:
       propertyPath: replyVariability
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
+      propertyPath: targets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
+      propertyPath: targets.Array.data[0]
+      value: 
+      objectReference: {fileID: 508438605}
     - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: guideTargets.Array.size
       value: 1

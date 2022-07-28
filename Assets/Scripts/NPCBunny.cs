@@ -4,106 +4,106 @@ using UnityEngine;
 
 public class NPCBunny : Bunny
 {
+    // INSTANTIATE IN INSPECTOR
     public float speed = 10f;
-    public bool targetFeature;
     public float touchDist = 0.5f; // min distance to hit target
-    public bool movesToPartner = true;
+    public bool isResponsive = true;
 
     // For adding & ordering target destinations as empty gameobjects in scene
-    public List<Transform> guideTargets = new List<Transform>();
-    private List<Vector3> targets = new List<Vector3>();
+    public List<Transform> targets = new List<Transform>();
+    private List<Vector3> _targets = new List<Vector3>();
 
+    // Simple state machine
+    [HideInInspector] public enum NPCBunnyState { Waiting, SeekingNext, Following, NoTargets, Still }
+    private NPCBunnyState myState = NPCBunnyState.NoTargets;
     private Vector3 move;
-    private bool seesPartner = false;
-    private bool seekNext = true;
-    private CollisionFlags moveResult;
 
     new void Start()
     {
-        foreach (Transform t in guideTargets) {
-            targets.Add(t.position);
+        foreach (Transform t in targets) {
+            _targets.Add(t.position);
+            Debug.Log("FOUND " + _targets.Count + " TARGETS");
         }
 
+        if (isResponsive) {
+            myState = NPCBunnyState.Waiting;
+        } else if (_targets.Count > 0) {
+            myState = NPCBunnyState.Still;
+        }
+        
         base.Start();
     }
 
-    new void Update()
+    new void Update() 
     {
-        // Debug.Log("Targets: " + targets.Count);
+        switch (myState) {
 
-        if (targetFeature) {
-            UpdateTargets();
-        } else {
-            if (DistToPartner < sightRadius) {
-            myPartner.LogReply(); // Sight will not fade if partner is in range
+            case NPCBunnyState.Waiting: ///////// WAITING STATE /////////
 
-                if (movesToPartner) {
-                    // Calculate vector from NPC position to player position
-                    move = (myPartner.myGraphic.position - transform.position);
+                if (DistToPartner < sightRadius) {
+                    myPartner.LogReply(); // Sight will not fade within range
 
-                    // moves player in correct horizontal direction at the correct speed
-                    controller.Move(move * speed * Time.deltaTime);
-
-                    // rotates to face player
-                    transform.LookAt(myPartner.myGraphic.position, Vector3.up);
-                    transform.localEulerAngles = new Vector3( // Reset X axis rotation to 0
-                        0f,
-                        transform.localEulerAngles.y,
-                        transform.localEulerAngles.z
-                    );
-                }    
-            }
-        }
-
-       
-
-
-        if (elapsedTime > songTimer) Sing();
-
-        base.Update();
-    }
-
-    void UpdateTargets()
-    {
-         if (movesToPartner) {
-            if (DistToPartner < sightRadius && !seesPartner) {
-                Debug.Log("Insert point 1");
-                targets.Insert(0, myPartner.transform.position);
-                seesPartner = true;
-            } else if (DistToPartner > sightRadius) {
-                Debug.Log("Remove point 1");
-                targets.Remove(myPartner.transform.position);
-                seesPartner = false;
-                Debug.Log("Targets: " + targets.Count);
-            }
-        }
-
-        if (targets.Count > 0) {
-            if (seekNext) {
-                // Moves player
-                move = targets[0] - transform.position; // Calculate vector
-                moveResult = controller.Move(move * speed * Time.deltaTime);
-
-                Debug.Log("moveResult: " + moveResult);
-                // move player and store collision info
-
-                if (moveResult != CollisionFlags.None || moveResult != CollisionFlags.Below) { // it hit something
-                    if (move.magnitude < touchDist) { // target reached
-                        StartCoroutine("AwaitPlayer"); // Queue target pop
-                    } else { // just sends kinda backwards if it hits random object
-                        Debug.Log("Insert point 3");
-                        targets.Insert(0, -transform.forward + -transform.right);
+                    if (_targets.Count > 0) {
+                        myState = NPCBunnyState.SeekingNext;
+                    } else {
+                        myState = NPCBunnyState.Following;
                     }
                 }
-            }
+                FacePlayer();
 
-            transform.LookAt(targets[0], Vector3.up);
-            transform.localEulerAngles = new Vector3( // Reset X axis rotation to 0
-                0f,
-                transform.localEulerAngles.y,
-                transform.localEulerAngles.z
-            );
+                if (elapsedTime > songTimer) Sing();
+
+            break;
+            
+            case NPCBunnyState.SeekingNext:
+
+                FaceTarget();
+                move = Vector3.Normalize(_targets[0] - transform.position);
+                if (move.magnitude > touchDist) {
+                    controller.Move(move * speed * Time.deltaTime);
+                } else {
+                    Debug.Log("TARGET REACHED");
+                    _targets.Remove(_targets[0]);
+                    myState = NPCBunnyState.Waiting;
+                }
+
+            break;
+
+            case NPCBunnyState.Following:
+
+                if (DistToPartner > sightRadius) {
+                    myState = NPCBunnyState.Waiting;
+                } else {
+                    move = (myPartner.myGraphic.position - transform.position);
+                    controller.Move(move * speed * Time.deltaTime);
+                }
+                FacePlayer();
+
+            break;
+
+            case NPCBunnyState.Still:
+            
+                FaceTarget();
+                move = _targets[0] - transform.position;
+                if (move.magnitude > touchDist) {
+                    controller.Move(move * speed * Time.deltaTime);
+                } else {
+                    Debug.Log("TARGET REACHED");
+                    _targets.Remove(_targets[0]);
+                    if (_targets.Count <= 0) myState = NPCBunnyState.NoTargets;
+                }
+                
+            break;
+
+            case NPCBunnyState.NoTargets: break;
+
+            default:
+                Debug.Log("ERROR: Unrecognized state " + myState);
+            break;
+
         }
+
+        base.Update();
     }
 
     new void Sing()
@@ -111,7 +111,7 @@ public class NPCBunny : Bunny
         // Update volume based on distance between bunnies -- 
         // sound attenuation is linear -- for nonlinear attenuation would use 
         // lerp -- this sets the volume only one time and does not update as 
-        // player's position changes, but that is not too noticeable for short
+        // player's position changes, but that isn't too noticeable for short
         // sounds like these ones
         volume = 1 - (DistToPartner / maxSongDist);
 
@@ -138,35 +138,20 @@ public class NPCBunny : Bunny
         yield return null;
     }
 
-    // Updates target only once NPC is in sight of player
-    public IEnumerator AwaitPlayer()
+    void Face(Vector3 pos)
     {
-        Debug.Log("AWAITING PLAYER");
-        seekNext = false;
-
-        // NPC will look at player while waiting for them.
-        Debug.Log("Coroutine insert point");
-        targets.Insert(0, myPartner.transform.position); 
-
-        while (!seesPartner) yield return null;
-
-        Debug.Log("Remove point 2");
-        Debug.Log("Remove point 3");
-        targets.Remove(targets[0]); // pop first item from list
-        targets.Remove(targets[0]); // twice (we added player)
-        seekNext = true;
-
-        
-        yield return null;
+        transform.LookAt(pos, Vector3.up);
+        transform.localEulerAngles = new Vector3( // Reset X axis rotation to 0
+            0f, transform.localEulerAngles.y, transform.localEulerAngles.z);
     }
 
-    // TODO: Enable cinematics by passing location in here
-    public IEnumerator MoveToTarget(Vector3 pos, float yRotation)
+    void FaceTarget()
     {
-        yield return null;
+        if (_targets.Count > 0) {
+            Face(_targets[0]);
+        }
     }
 
-    public static float DegreesToRadians(float degrees) { return (Mathf.PI / 180) * degrees; }
+    void FacePlayer() => Face(myPartner.myGraphic.position);
 
-    public static float RadiansToDegrees(float radians) { return (180 / Mathf.PI) * radians; }
 }
