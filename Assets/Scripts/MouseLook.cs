@@ -67,12 +67,13 @@ public class MouseLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // apply rotation to camera
-        bunnyScript.GetComponent<Transform>().localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        
+        // bunnyScript.GetComponent<Transform>().localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         // bunnyScript.GetComponent<Transform>().Rotate = (Vector3.up * mouseX);
         // bunnyScript.GetComponent<Transform>().localRotation = Quaternion.Euler(0f, yRotation, 0f);
 
         // apply rotation to player
-        bunnyScript.GetComponent<Transform>().Rotate(Vector3.up * mouseX);
+        
         // bunnyScript.GetComponent<Transform>().Rotate(Vector3.right * mouseY); 
 
         // float z = pivot.eulerAngles.z;
@@ -80,8 +81,38 @@ public class MouseLook : MonoBehaviour
 
         if (bunnyScript.isMoving) {
             // apply rotation to player graphic
-            playerBody.localRotation = Quaternion.Euler(0f, yRotation, 0f);
+            pivot.transform.localEulerAngles = new Vector3( // Reset X axis rotation to 0
+                    0f,
+                    0f,
+                    0f
+            );
+
+            /*
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            
+            bunnyScript.GetComponent<Transform>().Rotate(Vector3.up * mouseX);
+            playerBody.localRotation = Quaternion.Euler(0f, yRotation, 0f);            
+            playerBody.Rotate(Vector3.up * mouseX);*/
+            mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            xRotation -= mouseY; // decreases xRotation based on mouse position
+            
+            // stops player from looking all the way above/below them
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+            // apply rotation to camera
+            pivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+            // apply rotation to player
+            playerBody.Rotate(Vector3.up * mouseX); 
+            
+
         } else {
+
+            pivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+            pivot.Rotate(Vector3.up * mouseX);
             // pivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         }
 

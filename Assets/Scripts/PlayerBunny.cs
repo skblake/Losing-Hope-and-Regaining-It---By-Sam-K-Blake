@@ -41,7 +41,7 @@ public class PlayerBunny : Bunny
         ///////////////// MOVEMENT /////////////////
         grounded = controller.isGrounded;
         
-        if (grounded) Debug.Log("GROUNDED");
+        // if (grounded) Debug.Log("GROUNDED");
 
         if (grounded && velocity.y < 0) // Zeroes velocity when player reaches
             velocity.y = 0;             // the ground
@@ -51,9 +51,11 @@ public class PlayerBunny : Bunny
 
         move = transform.right * x + transform.forward * z;
 
-        if (move.magnitude > 0) {
+        if (move != Vector3.zero) {
+            // Debug.Log("MOVING");
             isMoving = true;
         } else {
+            // Debug.Log("NOT MOVING");
             isMoving = false;
         }
 
