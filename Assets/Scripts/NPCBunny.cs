@@ -6,6 +6,7 @@ public class NPCBunny : Bunny
 {
     // INSTANTIATE IN INSPECTOR
     public float speed = 10f;
+    public float leanDegrees = 20f;
     public float touchDist = 0.5f; // min distance to hit target
     public bool isResponsive = true;
 
@@ -16,20 +17,20 @@ public class NPCBunny : Bunny
     // Simple state machine
     [HideInInspector] public enum NPCBunnyState { Waiting, SeekingNext, Following, NoTargets, Still }
     private NPCBunnyState myState = NPCBunnyState.NoTargets;
+    private Vector3 leanVector;
     private Vector3 move;
 
     new void Start()
     {
-        foreach (Transform t in targets) {
-            _targets.Add(t.position);
-            Debug.Log("FOUND " + _targets.Count + " TARGETS");
-        }
+        UpdateTargetList(targets);
 
         if (isResponsive) {
             myState = NPCBunnyState.Waiting;
         } else if (_targets.Count > 0) {
             myState = NPCBunnyState.Still;
         }
+        
+        leanVector = new Vector3 (leanDegrees, 0f, 0f);
         
         base.Start();
     }
@@ -40,50 +41,62 @@ public class NPCBunny : Bunny
 
             case NPCBunnyState.Waiting: ///////// WAITING STATE /////////
 
-                if (DistToPartner < sightRadius) {
-                    myPartner.LogReply(); // Sight will not fade within range
+                FacePlayer(false);
 
+                if (DistToPartner < sightRadius) {
                     if (_targets.Count > 0) {
+                        currentMood = funkyFace;
                         myState = NPCBunnyState.SeekingNext;
                     } else {
+                        currentMood = happyFace;
                         myState = NPCBunnyState.Following;
                     }
                 }
-                FacePlayer();
 
                 if (elapsedTime > songTimer) Sing();
+                SendToGround();
 
             break;
             
-            case NPCBunnyState.SeekingNext:
+            case NPCBunnyState.SeekingNext: ///////// SEEKING STATE /////////
 
-                FaceTarget();
-                move = Vector3.Normalize(_targets[0] - transform.position);
+            Debug.Log("SEEKING TARGET " + _targets[0]);
+
+                move = _targets[0] - transform.position;
                 if (move.magnitude > touchDist) {
-                    controller.Move(move * speed * Time.deltaTime);
+                    FaceTarget(true);
+                    controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
                 } else {
                     Debug.Log("TARGET REACHED");
+                    Sing(); 
+                    FaceTarget(false);
                     _targets.Remove(_targets[0]);
+                    currentMood = neutralFace;
                     myState = NPCBunnyState.Waiting;
                 }
+                SendToGround();
 
             break;
 
-            case NPCBunnyState.Following:
+            case NPCBunnyState.Following: ///////// FOLLOWING STATE /////////
+
+                myPartner.timeSinceReply = 0f; // sight will only fade when outside radius
 
                 if (DistToPartner > sightRadius) {
+                    currentMood = neutralFace;
                     myState = NPCBunnyState.Waiting;
                 } else {
                     move = (myPartner.myGraphic.position - transform.position);
-                    controller.Move(move * speed * Time.deltaTime);
+                    controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
                 }
-                FacePlayer();
+
+                FacePlayer(DistToPartner > touchDist);
 
             break;
 
-            case NPCBunnyState.Still:
+            case NPCBunnyState.Still: //////////// STILL STATE ////////////
             
-                FaceTarget();
+                FaceTarget(false);
                 move = _targets[0] - transform.position;
                 if (move.magnitude > touchDist) {
                     controller.Move(move * speed * Time.deltaTime);
@@ -92,7 +105,9 @@ public class NPCBunny : Bunny
                     _targets.Remove(_targets[0]);
                     if (_targets.Count <= 0) myState = NPCBunnyState.NoTargets;
                 }
-                
+
+                SendToGround();
+
             break;
 
             case NPCBunnyState.NoTargets: break;
@@ -102,6 +117,8 @@ public class NPCBunny : Bunny
             break;
 
         }
+
+
 
         base.Update();
     }
@@ -138,20 +155,43 @@ public class NPCBunny : Bunny
         yield return null;
     }
 
-    void Face(Vector3 pos)
-    {
-        transform.LookAt(pos, Vector3.up);
-        transform.localEulerAngles = new Vector3( // Reset X axis rotation to 0
-            0f, transform.localEulerAngles.y, transform.localEulerAngles.z);
+    // Applies gravity. Gravity is not applied in all cases so NPC still
+    // hops on player's head.
+    void SendToGround() {
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
     }
 
-    void FaceTarget()
-    {
-        if (_targets.Count > 0) {
-            Face(_targets[0]);
+    // Replaces contents of target list with new list. 
+    public void UpdateTargetList(List<Transform> trans) {
+        _targets = new List<Vector3>();
+        foreach (Transform t in trans) {
+            _targets.Add(t.position);
+            Debug.Log("FOUND " + _targets.Count + " TARGETS");
         }
     }
 
-    void FacePlayer() => Face(myPartner.myGraphic.position);
+    void Face(Vector3 pos, bool leansToward)
+    {
+        transform.LookAt(pos, Vector3.up);
+        
+        if (leansToward) {
+            transform.localEulerAngles = new Vector3 ( // lean slightly forward
+                Vector3.Slerp(transform.localEulerAngles, leanVector, 1f).x, // lerp lean
+                transform.localEulerAngles.y, transform.localEulerAngles.z);
+        } else {
+            transform.localEulerAngles = new Vector3 ( // Reset X axis rotation to 0
+                0f, transform.localEulerAngles.y, transform.localEulerAngles.z);
+        }
+    }
+
+    void FaceTarget(bool leansToward)
+    {
+        if (_targets.Count > 0) {
+            Face(_targets[0], leansToward);
+        }
+    }
+
+    void FacePlayer(bool leansToward) => Face(myPartner.myGraphic.position, leansToward);
 
 }

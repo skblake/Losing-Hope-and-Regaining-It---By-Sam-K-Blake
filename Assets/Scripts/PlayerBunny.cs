@@ -14,8 +14,6 @@ public class PlayerBunny : Bunny
 
     ////// PHYSICS VARIABLES //////
     public float speed = 10f;
-    private float gravity = -9.81f; // based on Earth's gravity
-    private Vector3 velocity;
     private float jumpHeight = 1f;
     private bool grounded;
 
@@ -27,6 +25,7 @@ public class PlayerBunny : Bunny
 
     ////// COLOR VARIABLES ////// 
     public float colorLerpSecs = 3f;
+    public float blackoutDist = 5f;
     public float blackoutSecs = 7f;
     private Color targetColor;
 
@@ -81,10 +80,18 @@ public class PlayerBunny : Bunny
 
         /////////// UPDATE SIGHT OVERLAY ///////////
         timeSinceReply += Time.deltaTime;
-        targetColor.a = timeSinceReply / blackoutSecs;
+
+        if (DistToPartner > sightRadius) { // sight will not fade within range
+            targetColor.a = timeSinceReply / blackoutSecs;
+        } else {
+            targetColor.a = 0f;
+        }
+
         sightOverlay.color = Color.Lerp(sightOverlay.color, targetColor, colorLerpSecs);
+
+        // targetColor.a = DistToPartner / blackoutDist + (timeSinceReply / blackoutSecs);
+
 
         base.Update();
     }
-
 }

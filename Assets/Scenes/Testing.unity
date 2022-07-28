@@ -139,8 +139,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1530223144218242944, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
+      propertyPath: blackoutDist
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1530223144218242944, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: blackoutSecs
-      value: 5000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1530223144218242944, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: sightOverlay
@@ -168,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7837104824612532988, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.36
       objectReference: {fileID: 0}
     - target: {fileID: 7837104824612532988, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -264,7 +268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508438604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43, y: 0.5, z: -46}
+  m_LocalPosition: {x: -11.8, y: 0, z: -53.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -280,7 +284,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: speed
-      value: 3
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: replyOffset

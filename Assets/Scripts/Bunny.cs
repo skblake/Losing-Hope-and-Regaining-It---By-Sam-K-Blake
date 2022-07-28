@@ -17,7 +17,7 @@ public class Bunny : MonoBehaviour
 
     ////// INSTANTIATE IN INSPECTOR //////
     public AudioSource mySong;
-    public SongManager manager;
+    public LevelManager manager;
     public CharacterController controller; 
     public Transform myGraphic;
 
@@ -26,6 +26,10 @@ public class Bunny : MonoBehaviour
     public Material singFace;              // (1 - body and 2 - face)
     public Material neutralFace; 
     public Material happyFace;
+    public Material funkyFace;
+    protected Material currentMood;
+    private Material prevMood;
+    private Material[] mats; 
 
     ////// INSTANTIATED AT RUNTIME ////// 
     public Bunny myPartner;
@@ -35,6 +39,11 @@ public class Bunny : MonoBehaviour
     ////////// AUDIO VARIABLES ////////// 
     protected float volume = 1f;
     protected float elapsedTime = 0f;
+
+    /////////// SHARED PHYSICS VARIABLES ///////// 
+
+    protected float gravity = -9.81f; // based on Earth's gravity
+    protected Vector3 velocity;
 
     //////////// PROPERTIES /////////////
     public float TimeSinceSing {
@@ -56,11 +65,21 @@ public class Bunny : MonoBehaviour
         myPartner.myPartner = this; // lol there is definitely a better way to do this - 
                                     // bugfix: one bunny will always set itself as its own partner
         Debug.Log(gameObject.name + ": My partner is " + PartnerName + " and their partner is " + myPartner.PartnerName);
+        mats = myRenderer.materials;
+        currentMood = neutralFace;
     }
 
     protected void Update() 
     {
         elapsedTime += Time.deltaTime; 
+
+        // Update face
+        if (isSinging) {
+            SetFace(singFace);
+        } else {
+            SetFace(currentMood);
+        }
+
     }
 
     // play sound 
@@ -74,7 +93,7 @@ public class Bunny : MonoBehaviour
         }
 
         elapsedTime = 0f; // Reset timer even if no sound plays
-        StartCoroutine("UpdateFace", mySong.clip.length);
+        StartCoroutine("UpdateSingFace", mySong.clip.length);
     }
 
     // Allows player and NPC to behave differently when their partner sings
@@ -85,12 +104,9 @@ public class Bunny : MonoBehaviour
     }
 
     // displays singing face while sound is playing. duration = length in seconds.
-    IEnumerator UpdateFace(float duration)
+    IEnumerator UpdateSingFace(float duration)
     {
-        Material[] mats = myRenderer.materials;
-        mats[1] = singFace;
-        myRenderer.materials = mats;
-
+        isSinging = true;
         float singTime = 0f;
 
         while (singTime < duration) {
@@ -98,10 +114,15 @@ public class Bunny : MonoBehaviour
             yield return null;
         }
 
-        mats[1] = neutralFace;
-        myRenderer.materials = mats;
+        isSinging = false;
         yield return null;
     }
 
     public void LogReply() => timeSinceReply = 0f;
+
+    // Helper function for child classes to change bunny's face
+    protected void SetFace(Material m) {
+        mats[1] = m;
+        myRenderer.materials = mats;
+    } 
 }
