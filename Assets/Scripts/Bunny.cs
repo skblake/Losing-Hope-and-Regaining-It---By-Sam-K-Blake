@@ -20,6 +20,7 @@ public class Bunny : MonoBehaviour
     public LevelManager manager;
     public CharacterController controller; 
     public Transform myGraphic;
+    public Bunny myPartner;
 
     // faces
     public SkinnedMeshRenderer myRenderer; // renderer should have two materials
@@ -32,7 +33,6 @@ public class Bunny : MonoBehaviour
     private Material[] mats; 
 
     ////// INSTANTIATED AT RUNTIME ////// 
-    public Bunny myPartner;
     //public bool automated = false;
     public string PartnerName { get { return myPartner.gameObject.name; }}
 
@@ -61,10 +61,6 @@ public class Bunny : MonoBehaviour
     protected void Start() 
     {
         controller = this.GetComponent<CharacterController>();
-        myPartner = GameObject.FindWithTag("Bunny").GetComponent<Bunny>();
-        myPartner.myPartner = this; // lol there is definitely a better way to do this - 
-                                    // bugfix: one bunny will always set itself as its own partner
-        Debug.Log(gameObject.name + ": My partner is " + PartnerName + " and their partner is " + myPartner.PartnerName);
         mats = myRenderer.materials;
         currentMood = neutralFace;
     }

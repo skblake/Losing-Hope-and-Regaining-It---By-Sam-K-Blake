@@ -134,6 +134,7 @@ public class NPCBunny : Bunny
 
     new public IEnumerator SingBack ()
     {
+        Debug.Log("REPLY");
         float delayTime = Time.deltaTime;
 
         // Randomizing response time makes NPC more lifelike
