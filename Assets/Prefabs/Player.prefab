@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2c265357c5e46ae8a8f6cfe3c5bf85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 5000
+  mouseSensitivity: 1500
   camHasTwoAxes: 0
   tempGabeCamera: 0
   playerBody: {fileID: 5979927606999251581}

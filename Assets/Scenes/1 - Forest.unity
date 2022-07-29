@@ -3325,10 +3325,6 @@ PrefabInstance:
       propertyPath: tempGabeCamera
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7837104825726563218, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
-      propertyPath: mouseSensitivity
-      value: 4000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
 --- !u!1001 &273477933
@@ -16942,10 +16938,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb0bfc337e604a7d908e9ddae75285d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myID: 0
+  myID: 1
   npc: {fileID: 454683327}
   trigger: {fileID: 875600259}
-  newTargets: []
+  newTargets:
+  - {fileID: 749753873}
+  - {fileID: 1887652797}
+  - {fileID: 423618040}
+  - {fileID: 1105899687}
   stormSound: {fileID: 0}
   background: {fileID: 0}
   secsBeforeStorm: 20

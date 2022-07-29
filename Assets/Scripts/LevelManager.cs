@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour
             case LEVEL_ID.FOREST:
                 if (trigger != null && trigger.isHit)
                 {
+                    Debug.Log("MANAGER SEES TRIGGER");
                     trigger.isHit = false;
                     npc.UpdateTargetList(newTargets);
                     trigger.gameObject.SetActive(false);

@@ -164,6 +164,7 @@ public class NPCBunny : Bunny
 
     // Replaces contents of target list with new list. 
     public void UpdateTargetList(List<Transform> trans) {
+        Debug.Log("UPDATE TARGETS");
         _targets = new List<Vector3>();
         foreach (Transform t in trans) {
             _targets.Add(t.position);

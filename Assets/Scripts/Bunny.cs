@@ -109,6 +109,7 @@ public class Bunny : MonoBehaviour
         yield return null;
     }
 
+    // Register partner's reply 
     public void LogReply() => timeSinceReply = 0f;
 
     // Helper function for child classes to change bunny's face
