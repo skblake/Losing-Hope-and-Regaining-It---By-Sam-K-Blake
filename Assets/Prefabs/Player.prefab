@@ -232,21 +232,23 @@ MonoBehaviour:
   replyVariability: 0.5
   sightRadius: 2.5
   mySong: {fileID: 6720403218805450855}
-  manager: {fileID: 0}
   controller: {fileID: 7837104824612532986}
   myGraphic: {fileID: 1018852122343063578}
+  myPartner: {fileID: 0}
+  isResponsive: 1
   myRenderer: {fileID: 4776940585172219922}
   singFace: {fileID: 2100000, guid: c12dba4db4b10a34ea85b03c5b9263e6, type: 2}
   neutralFace: {fileID: 2100000, guid: 5b87a972518a3154aa254612d431fa98, type: 2}
   happyFace: {fileID: 2100000, guid: f2203f80845a66e4ab859ec6b767fcde, type: 2}
   funkyFace: {fileID: 2100000, guid: 4d0ca150427ac2f41b5cd8b25e023e6d, type: 2}
-  myPartner: {fileID: 0}
   timeSinceReply: 0
   sightOverlay: {fileID: 0}
   speed: 6
+  overlayDelaySecs: 3
   isMoving: 0
   colorLerpSecs: 3
-  blackoutSecs: 7
+  blackoutDist: 5
+  blackoutSecs: 12
 --- !u!1 &7837104825726563222
 GameObject:
   m_ObjectHideFlags: 0

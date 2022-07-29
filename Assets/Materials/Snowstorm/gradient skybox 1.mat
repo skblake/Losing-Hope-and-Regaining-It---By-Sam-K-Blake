@@ -23,8 +23,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _contrast: 15.4
-    - _offset: 0.507
+    - _offset: 0.21
     m_Colors:
-    - _colorHigh: {r: 0.41176474, g: 0.5176471, b: 0.23137257, a: 1}
-    - _colorLow: {r: 0.16078432, g: 0.27058825, b: 0.16862746, a: 1}
+    - _colorHigh: {r: 0.5566038, g: 0, b: 0.042815838, a: 1}
+    - _colorLow: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -3310,6 +3310,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2027866947}
     - target: {fileID: 7837104825726563218, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
+      propertyPath: camHasTwoAxes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7837104825726563218, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: m_GameManager
       value: 
       objectReference: {fileID: 1421031583}
@@ -3317,6 +3321,10 @@ PrefabInstance:
       propertyPath: playerGraphic
       value: 
       objectReference: {fileID: 328789197}
+    - target: {fileID: 7837104825726563218, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
+      propertyPath: tempGabeCamera
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7837104825726563218, guid: 00b4c5c2dc78d4b3d92655eede11ff4c, type: 3}
       propertyPath: mouseSensitivity
       value: 4000
@@ -6131,52 +6139,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: speed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: manager
       value: 
       objectReference: {fileID: 1421031582}
     - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: automated
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: myPartner
       value: 
       objectReference: {fileID: 2027866947}
-    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: songTimer
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: maxSongDist
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: replyOffset
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2914759132188659063, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: replyVariability
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 7837104824612532988, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7837104824612532988, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7837104824612532988, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7837104824612532988, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 7837104824612532988, guid: 96037d053f7ce485ea53f184458ef19a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16970,13 +16942,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb0bfc337e604a7d908e9ddae75285d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myID: 0
   npc: {fileID: 454683327}
   trigger: {fileID: 875600259}
-  triggerTargets:
-  - {fileID: 749753873}
-  - {fileID: 1887652797}
-  - {fileID: 423618040}
-  - {fileID: 1105899687}
+  newTargets: []
+  stormSound: {fileID: 0}
+  background: {fileID: 0}
+  secsBeforeStorm: 20
+  stillFaceDuration: 30
 --- !u!4 &1421031583
 Transform:
   m_ObjectHideFlags: 0

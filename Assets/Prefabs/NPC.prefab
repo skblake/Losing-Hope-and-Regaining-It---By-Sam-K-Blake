@@ -155,7 +155,7 @@ Transform:
   m_GameObject: {fileID: 7837104824612532989}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9116733739584947274}
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSongDist: 200
-  songTimer: 10
+  songTimer: 20
   replyOffset: 2
   replyVariability: 0.5
   sightRadius: 2.5
@@ -202,14 +202,14 @@ MonoBehaviour:
   manager: {fileID: 0}
   controller: {fileID: 7837104824612532986}
   myGraphic: {fileID: 5979927606999251581}
+  myPartner: {fileID: 0}
   myRenderer: {fileID: 4776940585172219922}
   singFace: {fileID: 2100000, guid: c12dba4db4b10a34ea85b03c5b9263e6, type: 2}
   neutralFace: {fileID: 2100000, guid: 5b87a972518a3154aa254612d431fa98, type: 2}
   happyFace: {fileID: 2100000, guid: f2203f80845a66e4ab859ec6b767fcde, type: 2}
   funkyFace: {fileID: 2100000, guid: 4d0ca150427ac2f41b5cd8b25e023e6d, type: 2}
-  myPartner: {fileID: 0}
   timeSinceReply: 0
-  speed: 0
+  speed: 7
   leanDegrees: 20
   touchDist: 1
   isResponsive: 1

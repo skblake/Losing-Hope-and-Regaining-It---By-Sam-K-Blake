@@ -8,7 +8,6 @@ public class NPCBunny : Bunny
     public float speed = 10f;
     public float leanDegrees = 20f;
     public float touchDist = 0.5f; // min distance to hit target
-    public bool isResponsive = true;
 
     // For adding & ordering target destinations as empty gameobjects in scene
     public List<Transform> targets = new List<Transform>();
@@ -61,14 +60,11 @@ public class NPCBunny : Bunny
             
             case NPCBunnyState.SeekingNext: ///////// SEEKING STATE /////////
 
-            Debug.Log("SEEKING TARGET " + _targets[0]);
-
                 move = _targets[0] - transform.position;
                 if (move.magnitude > touchDist) {
                     FaceTarget(true);
                     controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
                 } else {
-                    Debug.Log("TARGET REACHED");
                     Sing(); 
                     FaceTarget(false);
                     _targets.Remove(_targets[0]);
@@ -101,18 +97,19 @@ public class NPCBunny : Bunny
                 FaceTarget(false);
                 move = _targets[0] - transform.position;
                 if (move.magnitude > touchDist) {
-                    controller.Move(move * speed * Time.deltaTime);
+                    controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
                 } else {
-                    Debug.Log("TARGET REACHED");
                     _targets.Remove(_targets[0]);
                     if (_targets.Count <= 0) myState = NPCBunnyState.NoTargets;
                 }
-
                 SendToGround();
+                if (DistToPartner < sightRadius) myPartner.timeSinceReply = 0f;
 
             break;
 
-            case NPCBunnyState.NoTargets: break;
+            case NPCBunnyState.NoTargets: 
+                SendToGround(); 
+            break;
 
             default:
                 Debug.Log("ERROR: Unrecognized state " + myState);
@@ -136,22 +133,25 @@ public class NPCBunny : Bunny
 
     new public IEnumerator SingBack ()
     {
-        Debug.Log("REPLY");
-        float delayTime = Time.deltaTime;
+        if (myState != NPCBunnyState.Still && myState != NPCBunnyState.NoTargets) {
+            Debug.Log("REPLY");
+            float delayTime = Time.deltaTime;
 
-        // Randomizing response time makes NPC more lifelike
-        float randomDelay = Random.Range(
-            replyOffset * (1 - replyVariability), 
-            replyOffset * (1 + replyVariability)
-        );
+            // Randomizing response time makes NPC more lifelike
+            float randomDelay = Random.Range(
+                replyOffset * (1 - replyVariability), 
+                replyOffset * (1 + replyVariability)
+            );
 
-        while (delayTime < randomDelay) {
-            delayTime += Time.deltaTime;
-            yield return null;
+            while (delayTime < randomDelay) {
+                delayTime += Time.deltaTime;
+                yield return null;
+            }
+
+            myPartner.LogReply();
+            Sing();
         }
 
-        myPartner.LogReply();
-        Sing();
         yield return null;
     }
 
@@ -170,7 +170,19 @@ public class NPCBunny : Bunny
             Debug.Log("FOUND " + _targets.Count + " TARGETS");
         }
 
-        if (_targets.Count > 0) myState = NPCBunnyState.SeekingNext;
+        if (_targets.Count > 0) {
+            if (isResponsive){
+                myState = NPCBunnyState.SeekingNext;
+            } else {
+                myState = NPCBunnyState.Still;
+            }
+        } 
+    }
+
+    public void StillFace() {
+        isResponsive = false;
+        myState = NPCBunnyState.NoTargets;
+        FacePlayer(false);
     }
 
     void Face(Vector3 pos, bool leansToward)

@@ -17,10 +17,10 @@ public class Bunny : MonoBehaviour
 
     ////// INSTANTIATE IN INSPECTOR //////
     public AudioSource mySong;
-    public LevelManager manager;
     public CharacterController controller; 
     public Transform myGraphic;
     public Bunny myPartner;
+    public bool isResponsive = true;
 
     // faces
     public SkinnedMeshRenderer myRenderer; // renderer should have two materials
@@ -29,12 +29,7 @@ public class Bunny : MonoBehaviour
     public Material happyFace;
     public Material funkyFace;
     protected Material currentMood;
-    private Material prevMood;
     private Material[] mats; 
-
-    ////// INSTANTIATED AT RUNTIME ////// 
-    //public bool automated = false;
-    public string PartnerName { get { return myPartner.gameObject.name; }}
 
     ////////// AUDIO VARIABLES ////////// 
     protected float volume = 1f;
@@ -94,8 +89,8 @@ public class Bunny : MonoBehaviour
 
     // Allows player and NPC to behave differently when their partner sings
     public IEnumerator SingBack () 
-    { 
-        myPartner.LogReply();
+    {
+        if (myPartner.isResponsive) myPartner.LogReply();
         yield return null; 
     }
 

@@ -37,6 +37,7 @@
             sampler2D _normalMap;
             sampler2D _displacementMap;
             sampler2D _BackgroundTex;
+            sampler2D _MainTex;
             float4 _pan; // When you say "Vector" in Properties{}, it'll be a float4.
             float _gloss;
             uniform float _normalIntensity;

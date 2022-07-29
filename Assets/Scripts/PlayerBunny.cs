@@ -34,7 +34,7 @@ public class PlayerBunny : Bunny
 
     new void Start() 
     {
-        targetColor = sightOverlay.color;
+//         targetColor = sightOverlay.color;
         base.Start();
         waterOverlay = sightOverlay.material;
         waterOverlay.SetFloat("_normalIntensity", 0);
@@ -90,22 +90,16 @@ public class PlayerBunny : Bunny
 
         base.Update();
     }
-
-    void FixedUpdate()
-    {
-        
-    }
-
+    
     void NewUpdateSightOverlay()
     {
         if (DistToPartner > sightRadius && timeSinceReply > overlayDelaySecs) {
-            Debug.Log(timeSinceReply);
             currEffectStrength = (timeSinceReply - overlayDelaySecs) / blackoutSecs;
         } else {
             currEffectStrength = 0;
         }
 
-        Debug.Log(currEffectStrength);
+        currEffectStrength /= 2;
 
         waterOverlay.SetFloat("_normalIntensity", currEffectStrength);
         waterOverlay.SetFloat("_displacementIntensity", currEffectStrength);
