@@ -44,6 +44,7 @@ public class NPCBunny : Bunny
                 FacePlayer(false);
 
                 if (DistToPartner < sightRadius) {
+                    myPartner.timeSinceReply = 0f;
                     if (_targets.Count > 0) {
                         currentMood = funkyFace;
                         myState = NPCBunnyState.SeekingNext;
@@ -74,6 +75,7 @@ public class NPCBunny : Bunny
                     currentMood = neutralFace;
                     myState = NPCBunnyState.Waiting;
                 }
+                if (DistToPartner < sightRadius) myPartner.timeSinceReply = 0f;
                 SendToGround();
 
             break;

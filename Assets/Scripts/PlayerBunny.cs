@@ -16,6 +16,7 @@ public class PlayerBunny : Bunny
     public float speed = 10f;
     private float jumpHeight = 1f;
     private bool grounded;
+    public float overlayDelaySecs = 3f;
 
     ////// MOVEMENT VARIABLES ////// 
     private float x = 0f; 
@@ -28,11 +29,16 @@ public class PlayerBunny : Bunny
     public float blackoutDist = 5f;
     public float blackoutSecs = 7f;
     private Color targetColor;
+    private Material waterOverlay;
+    private float currEffectStrength = 0;
 
     new void Start() 
     {
         targetColor = sightOverlay.color;
         base.Start();
+        waterOverlay = sightOverlay.material;
+        waterOverlay.SetFloat("_normalIntensity", 0);
+        waterOverlay.SetFloat("_displacementIntensity", 0);
     }
 
     new void Update() 
@@ -80,6 +86,36 @@ public class PlayerBunny : Bunny
 
         /////////// UPDATE SIGHT OVERLAY ///////////
         timeSinceReply += Time.deltaTime;
+        NewUpdateSightOverlay();
+
+        base.Update();
+    }
+
+    void FixedUpdate()
+    {
+        
+    }
+
+    void NewUpdateSightOverlay()
+    {
+        if (DistToPartner > sightRadius && timeSinceReply > overlayDelaySecs) {
+            Debug.Log(timeSinceReply);
+            currEffectStrength = (timeSinceReply - overlayDelaySecs) / blackoutSecs;
+        } else {
+            currEffectStrength = 0;
+        }
+
+        Debug.Log(currEffectStrength);
+
+        waterOverlay.SetFloat("_normalIntensity", currEffectStrength);
+        waterOverlay.SetFloat("_displacementIntensity", currEffectStrength);
+        
+    }
+
+    void OldUpdateSightOverlay() 
+    {
+        /////////// UPDATE SIGHT OVERLAY ///////////
+        timeSinceReply += Time.deltaTime;
 
         if (DistToPartner > sightRadius) { // player is outside range
             targetColor.a = timeSinceReply / blackoutSecs;
@@ -88,9 +124,7 @@ public class PlayerBunny : Bunny
         }
 
         sightOverlay.color = Color.Lerp(sightOverlay.color, targetColor, colorLerpSecs);
-
+        
         // targetColor.a = DistToPartner / blackoutDist + (timeSinceReply / blackoutSecs);
-
-        base.Update();
     }
 }

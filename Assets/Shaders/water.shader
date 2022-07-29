@@ -11,6 +11,7 @@
         _refractionIntensity ("refraction intensity", Range(0, 0.5)) = 0.1
         _pan("pan", Vector) = (0, 0, 0, 0)
         _opacity ("opacity", Range(0,1)) = 0.9
+        _MainTex ("maintex", 2D) = "white" {}
     }
     SubShader
     {
@@ -38,8 +39,8 @@
             sampler2D _BackgroundTex;
             float4 _pan; // When you say "Vector" in Properties{}, it'll be a float4.
             float _gloss;
-            float _normalIntensity;
-            float _displacementIntensity;
+            uniform float _normalIntensity;
+            uniform float _displacementIntensity;
             float _refractionIntensity;
             float _opacity;
 
