@@ -35,6 +35,7 @@ public class PlayerBunny : Bunny
     new void Start() 
     {
         base.Start();
+        targetColor = sightOverlay.color;
         waterOverlay = sightOverlay.material;
         waterOverlay.SetFloat("_normalIntensity", 0);
         waterOverlay.SetFloat("_displacementIntensity", 0);
@@ -85,7 +86,7 @@ public class PlayerBunny : Bunny
 
         /////////// UPDATE SIGHT OVERLAY ///////////
         timeSinceReply += Time.deltaTime;
-        NewUpdateSightOverlay();
+        OldUpdateSightOverlay();
 
         base.Update();
     }
@@ -102,5 +103,21 @@ public class PlayerBunny : Bunny
 
         waterOverlay.SetFloat("_normalIntensity", currEffectStrength);
         waterOverlay.SetFloat("_displacementIntensity", currEffectStrength);
+    }
+
+    void OldUpdateSightOverlay() 
+    {
+        /////////// UPDATE SIGHT OVERLAY ///////////
+        timeSinceReply += Time.deltaTime;
+
+        if (DistToPartner > sightRadius) { // player is outside range
+            targetColor.a = timeSinceReply / blackoutSecs;
+        } else {
+            targetColor.a = 0f;
+        }
+
+        sightOverlay.color = Color.Lerp(sightOverlay.color, targetColor, colorLerpSecs);
+        
+        // targetColor.a = DistToPartner / blackoutDist + (timeSinceReply / blackoutSecs);
     }
 }

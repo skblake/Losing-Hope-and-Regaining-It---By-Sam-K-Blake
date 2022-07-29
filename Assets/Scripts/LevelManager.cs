@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
     public float forestEndSecs = 30f;
     
     private float timer = 0f; 
+    private bool sceneLoaded = false;
 
 
     ////// FOREST VARIABLES ////// 
@@ -65,8 +66,9 @@ public class LevelManager : MonoBehaviour
                 {
                     Debug.Log ("BEGIN END TIMER");
                     timer += Time.deltaTime; 
-                    if (timer > forestEndSecs) 
+                    if (!sceneLoaded && timer > forestEndSecs) 
                     {
+                        sceneLoaded = true;
                         Debug.Log("END LEVEL");
                         SceneManager.LoadSceneAsync("2 - SNOWSTORM");
                     }
@@ -92,8 +94,9 @@ public class LevelManager : MonoBehaviour
                     background.PlayOneShot(stormSound);
                     npc.UpdateTargetList(newTargets);
                 } 
-                else if (timer > stormDuration) 
+                else if (!sceneLoaded && timer > stormDuration) 
                 {
+                    sceneLoaded = true;
                     background.PlayOneShot(stormSound);
                     Debug.Log("END LEVEL");
                     SceneManager.LoadSceneAsync("3 - CLEARING");

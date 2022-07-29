@@ -66,7 +66,7 @@ public class NPCBunny : Bunny
                     FaceTarget(true);
                     controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
                 } else {
-                    mySong.PlayOneShot(altSong); 
+                    mySong.PlayOneShot(altSong, 0.75f); 
                     FaceTarget(false);
                     _targets.Remove(_targets[0]);
                     currentMood = neutralFace;

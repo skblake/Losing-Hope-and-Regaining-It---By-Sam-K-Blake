@@ -28,31 +28,21 @@ public class MouseLook : MonoBehaviour
 
     void Update()
     {
-        if (camHasTwoAxes) {
+        // Find mouse position and adjust by sensitivity and frame rate
+        mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-            TwoAxisCamera();
+        xRotation -= mouseY; // decreases xRotation based on mouse position
             
-        } else if (tempGabeCamera) {
+        // stops player from looking all the way above/below them
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-            TempGabeCamera();
+        // apply rotation to camera
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        } else {
-            // Find mouse position and adjust by sensitivity and frame rate
-            mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-
-            xRotation -= mouseY; // decreases xRotation based on mouse position
-            
-            // stops player from looking all the way above/below them
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
-            // apply rotation to camera
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-
-            // apply rotation to player
-            playerBody.Rotate(Vector3.up * mouseX); 
-        }
-    }
+        // apply rotation to player
+        playerBody.Rotate(Vector3.up * mouseX); 
+    } /*
 
     void TwoAxisCamera() 
     {
@@ -92,7 +82,7 @@ public class MouseLook : MonoBehaviour
             
             bunnyScript.GetComponent<Transform>().Rotate(Vector3.up * mouseX);
             playerBody.localRotation = Quaternion.Euler(0f, yRotation, 0f);            
-            playerBody.Rotate(Vector3.up * mouseX);*/
+            playerBody.Rotate(Vector3.up * mouseX);*/ /*
             mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -131,7 +121,7 @@ public class MouseLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         bunnyScript.GetComponent<Transform>().rotation = Quaternion.Euler(xRotation, yRotation, 0f);
         pivot.localRotation = Quaternion.Euler(0f, yRotation, 0f);
-        */
+        */ /*
     }
 
     public Transform m_GameManager;
@@ -203,5 +193,5 @@ public class MouseLook : MonoBehaviour
         {
             this.transform.Translate((Vector3.forward * -1) * (Time.deltaTime * 0.02f)); //Slowly pans backwards
         }        
-    }
+    }*/
 }
