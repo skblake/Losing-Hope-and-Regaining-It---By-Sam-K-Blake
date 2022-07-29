@@ -35,7 +35,6 @@ public class PlayerBunny : Bunny
     new void Start() 
     {
         base.Start();
-        targetColor = sightOverlay.color;
         waterOverlay = sightOverlay.material;
         waterOverlay.SetFloat("_normalIntensity", 0);
         waterOverlay.SetFloat("_displacementIntensity", 0);
@@ -44,12 +43,6 @@ public class PlayerBunny : Bunny
     new void Update() 
     {
         ///////////////// MOVEMENT /////////////////
-        grounded = controller.isGrounded;
-        
-        // if (grounded) Debug.Log("GROUNDED");
-
-        if (grounded && velocity.y < 0) // Zeroes velocity when player reaches
-            velocity.y = 0;             // the ground
         
         x = Input.GetAxis("Horizontal");
         z = Input.GetAxis("Vertical");
@@ -67,14 +60,6 @@ public class PlayerBunny : Bunny
         // moves player in correct horizontal direction at the correct speed
         controller.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && grounded)
-        {
-            Debug.Log("JUMP");
-            // Changes y axis movement by:
-            // square root of jump height * current direction * gravity.
-            velocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravity);
-        }
-
         velocity.y += gravity * Time.deltaTime; // add gravity to y axis movement
 
         controller.Move(velocity * Time.deltaTime); // Move player vertically
@@ -86,12 +71,12 @@ public class PlayerBunny : Bunny
 
         /////////// UPDATE SIGHT OVERLAY ///////////
         timeSinceReply += Time.deltaTime;
-        OldUpdateSightOverlay();
+        UpdateSightOverlay();
 
         base.Update();
     }
 
-    void NewUpdateSightOverlay()
+    void UpdateSightOverlay()
     {
         if (DistToPartner > sightRadius && timeSinceReply > overlayDelaySecs) {
             currEffectStrength = (timeSinceReply - overlayDelaySecs) / blackoutSecs;
@@ -103,21 +88,5 @@ public class PlayerBunny : Bunny
 
         waterOverlay.SetFloat("_normalIntensity", currEffectStrength);
         waterOverlay.SetFloat("_displacementIntensity", currEffectStrength);
-    }
-
-    void OldUpdateSightOverlay() 
-    {
-        /////////// UPDATE SIGHT OVERLAY ///////////
-        timeSinceReply += Time.deltaTime;
-
-        if (DistToPartner > sightRadius) { // player is outside range
-            targetColor.a = timeSinceReply / blackoutSecs;
-        } else {
-            targetColor.a = 0f;
-        }
-
-        sightOverlay.color = Color.Lerp(sightOverlay.color, targetColor, colorLerpSecs);
-        
-        // targetColor.a = DistToPartner / blackoutDist + (timeSinceReply / blackoutSecs);
     }
 }

@@ -9,7 +9,6 @@ public class LevelManager : MonoBehaviour
     public enum LEVEL_ID {TITLE, FOREST, SNOWSTORM, CLEARING}
     public LEVEL_ID myID; // This MUST be set in inspector
     public NPCBunny npc;
-    // public PlayerBunny player;
     public PlayerTrigger triggerInit;
     public PlayerTrigger triggerEnd;
     public List<Transform> newTargets;
@@ -23,11 +22,6 @@ public class LevelManager : MonoBehaviour
     
     private float timer = 0f; 
     private bool sceneLoaded = false;
-
-
-    ////// FOREST VARIABLES ////// 
-    
-
 
     ////// SNOWSTORM VARIABLES ///////
     private float stormDuration = 20f;
@@ -54,7 +48,8 @@ public class LevelManager : MonoBehaviour
 
         switch (myID) {
 
-            case LEVEL_ID.FOREST:
+            case LEVEL_ID.FOREST: ///////////// FOREST LEVEL /////////////
+
                 if (triggerInit != null && triggerInit.isHit)
                 {
                     Debug.Log("MANAGER SEES TRIGGER");
@@ -75,7 +70,7 @@ public class LevelManager : MonoBehaviour
                 }
             break;
 
-            case LEVEL_ID.SNOWSTORM:
+            case LEVEL_ID.SNOWSTORM: ////////// SNOWSTORM LEVEL //////////
 
                 timer += Time.deltaTime;
 
@@ -104,10 +99,5 @@ public class LevelManager : MonoBehaviour
 
             break;
         }
-    }
-
-    public void StartButtonPress()
-    {
-
     }
 }

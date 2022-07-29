@@ -189,7 +189,7 @@ public class NPCBunny : Bunny
         FacePlayer(false);
     }
 
-    void Face(Vector3 pos, bool leansToward)
+    void Face(Vector3 pos, bool leansToward) // Rotates NPC toward pos
     {
         transform.LookAt(pos, Vector3.up);
         
