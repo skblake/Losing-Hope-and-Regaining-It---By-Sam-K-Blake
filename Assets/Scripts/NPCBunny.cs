@@ -8,6 +8,7 @@ public class NPCBunny : Bunny
     public float speed = 10f;
     public float leanDegrees = 20f;
     public float touchDist = 0.5f; // min distance to hit target
+    public AudioClip altSong;
 
     // For adding & ordering target destinations as empty gameobjects in scene
     public List<Transform> targets = new List<Transform>();
@@ -65,7 +66,7 @@ public class NPCBunny : Bunny
                     FaceTarget(true);
                     controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
                 } else {
-                    Sing(); 
+                    mySong.PlayOneShot(altSong); 
                     FaceTarget(false);
                     _targets.Remove(_targets[0]);
                     currentMood = neutralFace;
@@ -95,12 +96,14 @@ public class NPCBunny : Bunny
             case NPCBunnyState.Still: //////////// STILL STATE ////////////
             
                 FaceTarget(false);
-                move = _targets[0] - transform.position;
-                if (move.magnitude > touchDist) {
-                    controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
-                } else {
-                    _targets.Remove(_targets[0]);
-                    if (_targets.Count <= 0) myState = NPCBunnyState.NoTargets;
+                if (_targets.Count > 0) {
+                    move = _targets[0] - transform.position;
+                    if (move.magnitude > touchDist) {
+                        controller.Move(Vector3.Normalize(move) * speed * Time.deltaTime);
+                    } else {
+                        _targets.Remove(_targets[0]);
+                        if (_targets.Count <= 0) myState = NPCBunnyState.NoTargets;
+                    }
                 }
                 SendToGround();
                 if (DistToPartner < sightRadius) myPartner.timeSinceReply = 0f;
@@ -182,7 +185,7 @@ public class NPCBunny : Bunny
 
     public void StillFace() {
         isResponsive = false;
-        myState = NPCBunnyState.NoTargets;
+        myState = NPCBunnyState.Still;
         FacePlayer(false);
     }
 

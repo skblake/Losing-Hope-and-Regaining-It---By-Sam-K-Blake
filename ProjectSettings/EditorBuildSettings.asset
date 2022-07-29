@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/1 - FOREST.unity
+    guid: 77e2f3c7832384a5b891b3001ea25e92
+  - enabled: 1
+    path: Assets/Scenes/2 - SNOWSTORM.unity
+    guid: 08030cda1459c40a1860423e65637183
+  - enabled: 1
+    path: Assets/Scenes/3 - CLEARING.unity
+    guid: 8ad3bf8865701486e8940ff6cee3f990
   m_configObjects: {}

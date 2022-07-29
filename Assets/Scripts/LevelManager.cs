@@ -7,10 +7,11 @@ public class LevelManager : MonoBehaviour
 {
     ///// INSTANTIATE IN INSPECTOR ////// 
     public enum LEVEL_ID {TITLE, FOREST, SNOWSTORM, CLEARING}
-    public LEVEL_ID myID; 
+    public LEVEL_ID myID; // This MUST be set in inspector
     public NPCBunny npc;
     // public PlayerBunny player;
-    public PlayerTrigger trigger;
+    public PlayerTrigger triggerInit;
+    public PlayerTrigger triggerEnd;
     public List<Transform> newTargets;
     public AudioClip stormSound;
     public AudioSource background; 
@@ -18,11 +19,16 @@ public class LevelManager : MonoBehaviour
     /////// TUNING VARIABLES ///////
     public float secsBeforeStorm = 20f;
     public float stillFaceDuration = 30f;
+    public float forestEndSecs = 30f;
+    
+    private float timer = 0f; 
+
+
+    ////// FOREST VARIABLES ////// 
     
 
 
     ////// SNOWSTORM VARIABLES ///////
-    private float timer = 0f; 
     private float stormDuration = 20f;
 
     private bool storming = false;
@@ -31,24 +37,39 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        stormDuration = stormSound.length;
-        stillFaceDuration += secsBeforeStorm;
-        stormDuration += stillFaceDuration;
+        if (myID == LEVEL_ID.SNOWSTORM) {
+            stormDuration = stormSound.length;
+
+            stillFaceDuration += secsBeforeStorm;
+            stormDuration += stillFaceDuration;
+        }
     }
 
     void Update()
-    { // This is not a great way of doing this and if I had more time I would just
-      // have a separate manager script for each level that inherits from the same
-      // base class, but since this is just a prototype it should be ok for now
+    { // This is not a great way of doing this and if I was building the foundation
+      // for a large game I would just have a separate manager script for each level 
+      // that inherits from the same base class, but since the scripted events in 
+      // this prototype are pretty simple it should be ok for now
+
         switch (myID) {
 
             case LEVEL_ID.FOREST:
-                if (trigger != null && trigger.isHit)
+                if (triggerInit != null && triggerInit.isHit)
                 {
                     Debug.Log("MANAGER SEES TRIGGER");
-                    trigger.isHit = false;
+                    triggerInit.isHit = false;
                     npc.UpdateTargetList(newTargets);
-                    trigger.gameObject.SetActive(false);
+                    triggerInit.gameObject.SetActive(false);
+                } 
+                else if (triggerEnd != null && triggerEnd.isHit)
+                {
+                    Debug.Log ("BEGIN END TIMER");
+                    timer += Time.deltaTime; 
+                    if (timer > forestEndSecs) 
+                    {
+                        Debug.Log("END LEVEL");
+                        SceneManager.LoadSceneAsync("2 - SNOWSTORM");
+                    }
                 }
             break;
 
@@ -56,16 +77,24 @@ public class LevelManager : MonoBehaviour
 
                 timer += Time.deltaTime;
 
-                if (!storming && timer > secsBeforeStorm) { // START STORM
+                if (!storming && timer > secsBeforeStorm) // START STORM
+                { 
                     Debug.Log("BEGIN STORM");
                     storming = true;
                     background.clip = stormSound;
                     background.PlayOneShot(stormSound);
                     background.loop = true;
                     npc.StillFace();
-                } else if (!targetsUpdated && timer > stillFaceDuration) {
+                } 
+                else if (!targetsUpdated && timer > stillFaceDuration) 
+                {
+                    targetsUpdated = true;
+                    background.PlayOneShot(stormSound);
                     npc.UpdateTargetList(newTargets);
-                } else if (timer > stormDuration) {
+                } 
+                else if (timer > stormDuration) 
+                {
+                    background.PlayOneShot(stormSound);
                     Debug.Log("END LEVEL");
                     SceneManager.LoadSceneAsync("3 - CLEARING");
                 }
